@@ -1,5 +1,5 @@
-# Event Assistant Chatbot
-Event assistant app written in python leveraging Claude, Gemini and ChatGPT LLMs. It is currently designed for a school event dataset, but can be easily expanded to any organisation events database. 
+# Occasio - An Event Management Assistant Chatbot
+Event assistant app written in python leveraging Claude, Gemini and ChatGPT LLMs. It is currently designed for a sample school event dataset locally added in the code, but can be easily expanded to any organisation events database. 
 
 ## Features
 - The chatbot UI is built using Gradio.
@@ -12,7 +12,7 @@ To run this project, you need the following:
 - Google account (to run this in Google Colab)
 - Python 3.11 or higher (to run it locally as python script and also for Jupyter Notebook)
 - Jupyter Notebook (to run it locally using Jupyter lab)
-- Your OpenAI API Secret Key. Get one in few secs from [OpenAi](https://platform.openai.com/settings/organization/api-keys)
+- Your OpenAI API, Claude API, Gemini API Secret Keys. Get one in few secs from [OpenAi](https://platform.openai.com/settings/organization/api-keys), [Claude](https://console.anthropic.com/settings/keys), [Gemini](https://console.cloud.google.com/apis)
 
 ## Installation
 
@@ -35,7 +35,9 @@ To run this project, you need the following:
    - Open the `.env` file in a text editor.  
    - Add the following line:  
      ```env
-     OPENAI_API_KEY=youropenaikey
+     OPENAI_API_KEY=your_openai_key
+     ANTHROPIC_API_KEY=your_anthropic_key
+     GOOGLE_API_KEY=your_gemini_key"     
      ```
    - Ensure:  
      - No spaces before or after the `=`.  
@@ -55,16 +57,18 @@ To run this project, you need the following:
    3. Follow the instructions in the notebook to execute the code cell by cell, by using `Shift+Enter` key.
    4. If the Python version is 3.13 or higher, there might be a warning message for some imports. These can be ignored.
 
-## Option 3: Run this on Google Colab (No installation Required.)
+## Option 2: Run this on Google Colab (No installation Required.)
 
    1. Go to [Google Colab](https://colab.research.google.com/).  
    2. Click **File > Upload Notebook** and select `event_assistant_colab.ipynb` from your local cloned repository folder.
    3. Set up env variable. Use Google Colab's Keys (typically found on the left side tool bar with a Key image)
-      - 3a. Add `OPENAI_API_KEY` as the Secret name and paste your Open AI API Key. Enable the Notebook access option.  
-   4. Run the Notebook cell-by-cell by pressing `Shift+Enter`
-   5. At the end, upload your requirement document in Gradio UI.
+      - 3a. Add `OPENAI_API_KEY` as the Secret name and paste your Open AI API Key. Enable the Notebook access option.
+      - 3b. Add `ANTHROPIC_API_KEY` as the Secret name and paste your Claude API KEY Key. Enable the Notebook access option.
+      - 3c. Add `GOOGLE_API_KEY` as the Secret name and paste your Gemini API Key. Enable the Notebook access option.
+   4. Upload "requirements.txt" file using the folder icon on the left. Ignore the warning which says the file will be terminated after the session.
+   5. Run the Notebook cell-by-cell by pressing `Shift+Enter`.
 
-## Option 4: Run as a standalone .py python script
+## Option 3: Run as a standalone .py python script
    1. If Python is not installed already, install Python 3.11 or higher version from [here](https://www.python.org/downloads/)
    2. Create a .env file as mentioned above.
    3. Install dependenices by running this command
@@ -78,5 +82,5 @@ To run this project, you need the following:
 - `event_assistant.ipynb`: Jupyter notebook to run in locally installed jupyter lab.
 - `event_assistant_colab.ipynb`: Jupyter notebook to run in Google Colab.
 -  `event_assistant.py`: To run as a standalone python script locally
-- `.env`: Environment file for storing the OpenAI API Key (not included in the repository).
+- `.env`: Environment file for storing the API Keys (not included in the repository).
 - `requirements.txt`: Contains the required dependencies. Needed only for running as local python script
