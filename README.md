@@ -37,7 +37,7 @@ To run this project, you need the following:
      ```env
      OPENAI_API_KEY=your_openai_key
      ANTHROPIC_API_KEY=your_anthropic_key
-     GOOGLE_API_KEY=your_gemini_key"     
+     GOOGLE_API_KEY=your_gemini_key     
      ```
    - Ensure:  
      - No spaces before or after the `=`.  
