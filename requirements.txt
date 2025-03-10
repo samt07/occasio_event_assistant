@@ -2,5 +2,4 @@ openai
 google-generativeai
 anthropic
 gradio
-pandas
 python-dotenv
