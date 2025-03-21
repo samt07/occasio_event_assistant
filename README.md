@@ -13,6 +13,7 @@ To run this project, you need the following:
 - Python 3.11 or higher (to run it locally as python script and also for Jupyter Notebook)
 - Jupyter Notebook (to run it locally using Jupyter lab)
 - Your OpenAI API, Claude API, Gemini API Secret Keys. Get one in few secs from [OpenAi](https://platform.openai.com/settings/organization/api-keys), [Claude](https://console.anthropic.com/settings/keys), [Gemini](https://console.cloud.google.com/apis)
+- Simply goto this link on [HuggingFace](https://huggingface.co/spaces/Samhugs07/Occasio)
 
 ## Installation
 
@@ -49,7 +50,9 @@ To run this project, you need the following:
 
 ## Usage
 
-## Option 1: Run with locally installed Jupyter Notebook. You must have installed Python already. 
+## Option 1: Simply goto this link on [HuggingFace](https://huggingface.co/spaces/Samhugs07/Occasio)
+
+## Option 2: Run with locally installed Jupyter Notebook. You must have installed Python already. 
    1. Create a .env file as mentioned above
    2. Open the Jupyter Notebook:
        ```bash
@@ -57,7 +60,7 @@ To run this project, you need the following:
    3. Follow the instructions in the notebook to execute the code cell by cell, by using `Shift+Enter` key.
    4. If the Python version is 3.13 or higher, there might be a warning message for some imports. These can be ignored.
 
-## Option 2: Run this on Google Colab (No installation Required.)
+## Option 3: Run this on Google Colab (No installation Required.)
 
    1. Go to [Google Colab](https://colab.research.google.com/).  
    2. Click **File > Upload Notebook** and select `event_assistant_colab.ipynb` from your local cloned repository folder.
@@ -68,7 +71,7 @@ To run this project, you need the following:
    4. Upload "requirements.txt" file using the folder icon on the left. Ignore the warning which says the file will be terminated after the session.
    5. Run the Notebook cell-by-cell by pressing `Shift+Enter`.
 
-## Option 3: Run as a standalone .py python script
+## Option 4: Run as a standalone .py python script
    1. If Python is not installed already, install Python 3.11 or higher version from [here](https://www.python.org/downloads/)
    2. Create a .env file as mentioned above.
    3. Install dependenices by running this command
