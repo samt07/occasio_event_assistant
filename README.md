@@ -2,6 +2,8 @@
 Event assistant app written in python leveraging Claude, Gemini and ChatGPT LLMs. It is currently designed for a sample school event dataset locally added in the code, but can be easily expanded to any organisation events database. 
 
 ## Features
+- Multimodel (ChatGPT, Claude, Gemini)
+- Multimodal (Image, Audio, Text)
 - The chatbot UI is built using Gradio.
 - The user can query the chatbot asking for information on an upcoming event in a school (PTA meeting, 100 days of school, etc)
 - The chatbot responds with the event details, reads out the response and also displays an image generated dynamically for that particular event.
