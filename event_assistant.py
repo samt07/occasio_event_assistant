@@ -3,7 +3,7 @@
 
 # # Occasio - Event Management Assistant
 
-# In[ ]:
+# In[3]:
 
 
 # imports
@@ -19,7 +19,7 @@ import google.generativeai as genai
 import gradio as gr
 
 
-# In[ ]:
+# In[4]:
 
 
 # Load environment variables in a file called .env
@@ -46,7 +46,7 @@ else:
     print("Google API Key not set")
 
 
-# In[ ]:
+# In[5]:
 
 
 # Connect to OpenAI, Anthropic and Google
@@ -61,19 +61,36 @@ genai.configure()
 GOOGLE_MODEL = "gemini-2.0-flash"
 
 
-# In[ ]:
+# In[173]:
 
 
-system_message = "You are called \"EventAI\", a virtual assistant for an Elementary school called Eagle Elementary School. You can help users by giving \
-them details of upcoming shcool events like event name, description, location etc. "
-#system_message += "Introduce yourself with a warm welcome message on your first response ONLY."
-system_message += "Give short, courteous answers, no more than 2 sentences. "
-system_message += "Always be accurate. If you don't know the answer, say so. Do not make up your own event details information"
-system_message += "You might be asked to list the questions asked by the user so far. In that situation, based on the conversation history provided to you, \
-list the questions and respond"
+system_message = (
+    'You are called "EventAI," a virtual assistant for an Elementary school called Eagle Elementary School. '
+    "You will help users by providing details of upcoming school events such as event name, description, and location. "
+    "You MUST always call the appropriate tool function to fetch event details and NEVER generate information yourself. "
+    "If you do not have the required details, simply state that you do not have that information. "
+    "Responses should be short and courteous, no more than 2 sentences. "
+    "When asked to list user questions, summarize based on conversation history."
+
+    "\n\nExample:\n"
+    "User: What is read aloud?\n"
+    "Assistant: [calls tool function to fetch read aloud event]\n"
+)
 
 
-# In[ ]:
+# In[147]:
+
+
+# system_message = "You are called \"EventAI\", a virtual assistant for an Elementary school called Eagle Elementary School. You will help users by giving \
+# them details of upcoming school events like event name, description, location etc. by calling a tools function"
+# #system_message += "Introduce yourself with a warm welcome message on your first response ONLY."
+# system_message += "Give short, courteous answers, no more than 2 sentences. "
+# system_message += "Do not make up your own event details information"
+# system_message += "You might be asked to list the questions asked by the user so far. In that situation, based on the conversation history provided to you, \
+# list the questions and respond"
+
+
+# In[148]:
 
 
 # Some imports for handling images
@@ -83,7 +100,7 @@ from io import BytesIO
 from PIL import Image
 
 
-# In[ ]:
+# In[149]:
 
 
 def artist(event_text):
@@ -99,7 +116,7 @@ def artist(event_text):
     return Image.open(BytesIO(image_data))
 
 
-# In[ ]:
+# In[150]:
 
 
 import base64
@@ -115,17 +132,79 @@ def talker(message):
 
     audio_stream = BytesIO(response.content)
     output_filename = "output_audio.mp3"
+    
     with open(output_filename, "wb") as f:
         f.write(audio_stream.read())
-
-    # Play the generated audio
-    display(Audio(output_filename, autoplay=True))
+    return output_filename
 
 
-# In[ ]:
+# In[151]:
 
 
 school_events = [
+    {
+        "event_id": "science_fair",
+        "name": "Annual Science Fair",
+        "description": "Students showcase their science projects and experiments.",
+        "date_time": "May 25th, 2025 10 AM",
+        "location": "School Auditorium"
+    },
+    {
+        "event_id": "sports_day",
+        "name": "Sports Day",
+        "description": "A day full of fun and competitive sports activities for students.",
+        "date_time": "Jun 10th, 2025 9 AM",
+        "location": "School Playground"
+    },
+    {
+        "event_id": "art_exhibition",
+        "name": "Art Exhibition",
+        "description": "Students display their creative artwork for parents and teachers to admire.",
+        "date_time": "Jun 20th, 2025 3 PM",
+        "location": "School Art Hall"
+    },
+    {
+        "event_id": "music_festival",
+        "name": "Annual Music Festival",
+        "description": "A musical event where students perform solo and group performances.",
+        "date_time": "Jul 5th, 2025 6 PM",
+        "location": "School Auditorium"
+    },
+    {
+        "event_id": "career_day",
+        "name": "Career Day",
+        "description": "Professionals from various fields share their experiences with students.",
+        "date_time": "Aug 12th, 2025 10 AM",
+        "location": "Conference Hall"
+    },
+    {
+        "event_id": "math_olympiad",
+        "name": "Math Olympiad",
+        "description": "A competitive math event to challenge students' problem-solving skills.",
+        "date_time": "Sep 1st, 2025 2 PM",
+        "location": "Math Lab"
+    },
+    {
+        "event_id": "book_fair",
+        "name": "Book Fair",
+        "description": "A school-wide book fair to encourage reading and literacy.",
+        "date_time": "Sep 20th, 2025 11 AM",
+        "location": "Library"
+    },
+    {
+        "event_id": "halloween_parade",
+        "name": "Halloween Parade",
+        "description": "Students dress up in costumes and parade around the school.",
+        "date_time": "Oct 31st, 2025 1 PM",
+        "location": "School Courtyard"
+    },
+    {
+        "event_id": "winter_concert",
+        "name": "Winter Concert",
+        "description": "A special musical performance to celebrate the winter season.",
+        "date_time": "Dec 15th, 2025 5 PM",
+        "location": "School Auditorium"
+    },
     {
         "event_id": "pta",
         "name": "Parent Teachers Meeting (PTA/PTM)",
@@ -178,7 +257,7 @@ school_events = [
 ]
 
 
-# In[ ]:
+# In[152]:
 
 
 def get_event_details(query):
@@ -200,7 +279,7 @@ def get_event_details(query):
 # 
 # Well, kinda.
 
-# In[ ]:
+# In[153]:
 
 
 # for claude
@@ -223,7 +302,7 @@ tools_claude = [
 ]
 
 
-# In[ ]:
+# In[154]:
 
 
 # For GPT
@@ -245,14 +324,14 @@ events_function_gpt = {
 }
 
 
-# In[ ]:
+# In[155]:
 
 
 # And this is included in a list of tools:
 tools_gpt = [{"type": "function", "function": events_function_gpt}]
 
 
-# In[ ]:
+# In[156]:
 
 
 #Gemini function declaration structure
@@ -287,7 +366,7 @@ gemini_event_details = [{
 ]
 
 
-# In[ ]:
+# In[178]:
 
 
 def chat_claude(history):
@@ -299,7 +378,6 @@ def chat_claude(history):
     message = claude.messages.create(
         model=ANTHROPIC_MODEL,
         max_tokens=1000,
-        temperature=0.7,
         system=system_message,
         messages=history_claude,
         tools=tools_claude
@@ -352,7 +430,7 @@ def chat_claude(history):
                 for text in stream.text_stream:
                     result += text or ""
                     yield result, None
-            talker(result)
+            #talker(result)
             #image= artist(tool_input.get('event_text'))
             yield result, image
         else:
@@ -361,7 +439,7 @@ def chat_claude(history):
             for i in range(0, len(response), chunk_size):
                 yield response[:i + chunk_size], None
                 time.sleep(0.05) #Simulate streaming delay
-            talker(response)
+            #talker(response)
             #image= artist(tool_input.get('event_text'))
             yield response, None
     except Exception as e:
@@ -371,7 +449,7 @@ def chat_claude(history):
     
 
 
-# In[ ]:
+# In[177]:
 
 
 def chat_gpt(history):
@@ -403,7 +481,7 @@ def chat_gpt(history):
             for chunk in stream:
                 result += chunk.choices[0].delta.content or ""
                 yield result, None
-            talker(result)
+            #talker(result)
             yield result, image
         else:        
             reply = response.choices[0].message.content
@@ -411,7 +489,7 @@ def chat_gpt(history):
             for i in range(0, len(reply), chunk_size):
                 yield reply[:i + chunk_size], None
                 time.sleep(0.05)
-            talker(reply)
+            #talker(reply)
             #image= artist("No such event")
             yield reply, None
     except Exception as e:
@@ -420,11 +498,11 @@ def chat_gpt(history):
         yield error_message, None
 
 
-# In[ ]:
+# In[176]:
 
 
 def chat_gemini(history):
-    print(f"\nhistroy is {history}\n")
+    print(f"\nhistory is {history}\n")
     history_gemini = [{'role': m['role'], 'parts': [{'text': m['content']}]} if 'content' in m       #if content exists, change it to parts format
                       else {'role': m['role'], 'parts': m['parts']} if 'parts' in m                      #else if parts exists, just copy it as it is
                       else {'role': m['role']} for m in history]        #else neither content nor parts exists, copy only the role ignoring all other keys like metadata, options etc
@@ -463,7 +541,7 @@ def chat_gemini(history):
                 result += chunk.candidates[0].content.parts[0].text or ""
                 #print(f"REsult is \n{result}\n")
                 yield result, None
-            talker(result)            
+            #talker(result)            
             yield result, image
             #print(f"REsult is \n{result}\n")
         else: 
@@ -472,21 +550,18 @@ def chat_gemini(history):
             for i in range(0, len(reply), chunk_size):
                 yield reply[:i + chunk_size], None
                 time.sleep(0.05)
-            talker(reply)
+            #talker(reply)
             #image= artist("No such event")
             yield reply, None
         
     except Exception as e:
         error_message = "Apologies, my server is acting weird. Please try again later."
         print(e)
-        yield error_message, None
-         
-
-        
+        yield error_message, None      
     
 
 
-# In[ ]:
+# In[168]:
 
 
 def call_and_process_model_responses(fn_name, chatbot):#, response, image):
@@ -502,7 +577,7 @@ def call_and_process_model_responses(fn_name, chatbot):#, response, image):
         
 
 
-# In[ ]:
+# In[169]:
 
 
 def handle_tool_call(event_text):
@@ -518,7 +593,7 @@ def handle_tool_call(event_text):
     
 
 
-# In[ ]:
+# In[170]:
 
 
 def process_chosen_model(chatbot, model):
@@ -535,7 +610,7 @@ def process_chosen_model(chatbot, model):
         
 
 
-# In[ ]:
+# In[174]:
 
 
 # More involved Gradio code as we're not using the preset Chat interface!
@@ -550,9 +625,6 @@ with gr.Blocks(css="""
     with gr.Row():
         gr.HTML("<h1 style='text-align: center; color: #4CAF50;'>Occasio! An Event Management Assistant</h1>")  # Added title
     with gr.Row():
-        # with gr.Column(scale=3):  #Acts as a spacer on the left
-        #     pass
-        
         with gr.Column(scale=0):
             model = gr.Dropdown(
                 choices=["GPT", "Claude", "Gemini"], 
@@ -561,9 +633,6 @@ with gr.Blocks(css="""
                 interactive=True,
                 container=True  # Applying the CSS class
             )
-        # with gr.Column(scale=-54, min_width=200):
-        #     gr.HTML("<h1 style='text-align: center; color: #4CAF50;'>Occasio</h1>")  # Added title
-        #     pass #Acts as a spacer on the right
     with gr.Row():
         chatbot = gr.Chatbot(height=500, type="messages")
         image_output = gr.Image(height=500)
@@ -577,10 +646,18 @@ with gr.Blocks(css="""
         history += [{"role":"user", "content":message}]
         return "", history
     
+    
     entry.submit(do_entry, inputs=[entry, chatbot], outputs=[entry, chatbot]).then(
         process_chosen_model, inputs=[chatbot, model], outputs=[chatbot, image_output]
+    ).then(#added this specifically for Hugging face spaces deployment
+        lambda chat: talker(chat[-1]["content"]), inputs=[chatbot], outputs=gr.Audio(autoplay=True, visible=False)
     )
+    
     clear.click(lambda: None, inputs=None, outputs=chatbot, queue=False)
+
+
+# In[175]:
+
 
 ui.launch(inbrowser=True)
 
