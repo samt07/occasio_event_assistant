@@ -661,6 +661,8 @@ with gr.Blocks(css="""
 
 ui.launch(inbrowser=True)
 
+input("Press Enter to exit\n")
+
 
 # In[ ]:
 
