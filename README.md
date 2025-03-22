@@ -61,7 +61,7 @@ To run this project, you need the following:
       pip install -r requirements.txt
    3. Open the Jupyter Notebook:
        ```bash
-          jupyter lab event_assistant.ipynb
+       jupyter lab event_assistant.ipynb
    4. Follow the instructions in the notebook to execute the code cell by cell, by using `Shift+Enter` key.
    5. If the Python version is 3.13 or higher, there might be a warning message for some imports. These can be ignored.
 
