@@ -15,7 +15,7 @@ To run this project, you need the following:
 - Python 3.11 or higher (to run it locally as python script and also for Jupyter Notebook)
 - Jupyter Notebook (to run it locally using Jupyter lab)
 - Your OpenAI API, Claude API, Gemini API Secret Keys. Get one in few secs from [OpenAi](https://platform.openai.com/settings/organization/api-keys), [Claude](https://console.anthropic.com/settings/keys), [Gemini](https://console.cloud.google.com/apis)
-- Simply goto this link on [HuggingFace](https://huggingface.co/spaces/Samhugs07/Occasio)
+- Or, ignore all of the above and simply goto this link on [HuggingFace](https://huggingface.co/spaces/Samhugs07/Occasio)
 
 ## Installation
 
@@ -56,11 +56,14 @@ To run this project, you need the following:
 
 ## Option 2: Run with locally installed Jupyter Notebook. You must have installed Python already. 
    1. Create a .env file as mentioned above
-   2. Open the Jupyter Notebook:
+   2. Install dependencies
+      ```bash
+      pip install -r requirements.txt
+   3. Open the Jupyter Notebook:
        ```bash
           jupyter lab event_assistant.ipynb
-   3. Follow the instructions in the notebook to execute the code cell by cell, by using `Shift+Enter` key.
-   4. If the Python version is 3.13 or higher, there might be a warning message for some imports. These can be ignored.
+   4. Follow the instructions in the notebook to execute the code cell by cell, by using `Shift+Enter` key.
+   5. If the Python version is 3.13 or higher, there might be a warning message for some imports. These can be ignored.
 
 ## Option 3: Run this on Google Colab (No installation Required.)
 
