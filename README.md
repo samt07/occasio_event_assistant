@@ -1,13 +1,13 @@
 # Occasio - An Event Management Assistant Chatbot
-Event assistant app written in python leveraging Claude, Gemini and ChatGPT LLMs. It is currently designed for a sample school event dataset locally added in the code, but can be easily expanded to any organisation events database. 
+Event assistant app written in python leveraging Claude, Gemini and ChatGPT LLMs. It is currently designed for a sample school event dataset locally added in the code, but can be easily expanded to any organisation's events database. 
 
 ## Features
-- Multimodel (ChatGPT, Claude, Gemini)
-- Multimodal (Image, Audio, Text)
+- Multimodel Capabilities (ChatGPT, Claude, Gemini)
+- Multimodal Responses (Image, Audio, Text)
 - The chatbot UI is built using Gradio.
 - The user can query the chatbot asking for information on an upcoming event in a school (PTA meeting, 100 days of school, etc)
 - The chatbot responds with the event details, reads out the response and also displays an image generated dynamically for that particular event.
-- Used each of the LLMs' tools agentic framework to route the queries to an exclusive locally written function to fetch the event details.
+- Used each of the LLMs' tools framework to route the queries to an exclusive locally written function to fetch the event details.
   
 ## Requirements
 To run this project, you need the following:
