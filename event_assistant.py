@@ -3,7 +3,7 @@
 
 # # Occasio - Event Management Assistant
 
-# In[3]:
+# In[1]:
 
 
 # imports
@@ -19,7 +19,7 @@ import google.generativeai as genai
 import gradio as gr
 
 
-# In[4]:
+# In[2]:
 
 
 # Load environment variables in a file called .env
@@ -46,7 +46,7 @@ else:
     print("Google API Key not set")
 
 
-# In[5]:
+# In[3]:
 
 
 # Connect to OpenAI, Anthropic and Google
@@ -61,7 +61,7 @@ genai.configure()
 GOOGLE_MODEL = "gemini-2.0-flash"
 
 
-# In[173]:
+# In[4]:
 
 
 system_message = (
@@ -78,7 +78,7 @@ system_message = (
 )
 
 
-# In[147]:
+# In[5]:
 
 
 # system_message = "You are called \"EventAI\", a virtual assistant for an Elementary school called Eagle Elementary School. You will help users by giving \
@@ -90,7 +90,7 @@ system_message = (
 # list the questions and respond"
 
 
-# In[148]:
+# In[6]:
 
 
 # Some imports for handling images
@@ -100,7 +100,7 @@ from io import BytesIO
 from PIL import Image
 
 
-# In[149]:
+# In[7]:
 
 
 def artist(event_text):
@@ -116,7 +116,7 @@ def artist(event_text):
     return Image.open(BytesIO(image_data))
 
 
-# In[150]:
+# In[8]:
 
 
 import base64
@@ -138,7 +138,7 @@ def talker(message):
     return output_filename
 
 
-# In[151]:
+# In[9]:
 
 
 school_events = [
@@ -257,7 +257,7 @@ school_events = [
 ]
 
 
-# In[152]:
+# In[10]:
 
 
 def get_event_details(query):
@@ -279,7 +279,7 @@ def get_event_details(query):
 # 
 # Well, kinda.
 
-# In[153]:
+# In[11]:
 
 
 # for claude
@@ -302,7 +302,7 @@ tools_claude = [
 ]
 
 
-# In[154]:
+# In[12]:
 
 
 # For GPT
@@ -324,14 +324,14 @@ events_function_gpt = {
 }
 
 
-# In[155]:
+# In[13]:
 
 
 # And this is included in a list of tools:
 tools_gpt = [{"type": "function", "function": events_function_gpt}]
 
 
-# In[156]:
+# In[14]:
 
 
 #Gemini function declaration structure
@@ -366,11 +366,11 @@ gemini_event_details = [{
 ]
 
 
-# In[178]:
+# In[15]:
 
 
 def chat_claude(history):
-    print(f"\nhistory is {history}\n")
+    #print(f"\nhistory is {history}\n")
     #Claude doesnt take any other key value pair other than role and content. Hence filtering only those key value pairs
     history_claude = list({"role": msg["role"], "content": msg["content"]} for msg in history if "role" in msg and "content" in msg)
     #history is [{'role': 'user', 'metadata': None, 'content': 'when is pta', 'options': None}]
@@ -383,7 +383,7 @@ def chat_claude(history):
         tools=tools_claude
     )
     image = None
-    print(f"Claude's message is \n {pprint.pprint(message)}\n")
+    #print(f"Claude's message is \n {pprint.pprint(message)}\n")
     try:        
         if message.stop_reason == "tool_use":
             tool_use = next(block for block in message.content if block.type == "tool_use")
@@ -392,7 +392,7 @@ def chat_claude(history):
             tool_result = handle_tool_call(event_text)
             #tool_result = handle_tool_call(tool_use, "Claude")
             
-            print(f"Tool Result: {tool_result}")
+            #print(f"Tool Result: {tool_result}")
             
             response = claude.messages.stream(
                 model=ANTHROPIC_MODEL,
@@ -449,11 +449,11 @@ def chat_claude(history):
     
 
 
-# In[177]:
+# In[16]:
 
 
 def chat_gpt(history):
-    print(f"\nhistory is {history}\n")
+    #print(f"\nhistory is {history}\n")
     messages = [{"role": "system", "content": system_message}] + history
     response = openai.chat.completions.create(model=OPENAI_MODEL, messages=messages, tools=tools_gpt)
     image = None
@@ -498,16 +498,16 @@ def chat_gpt(history):
         yield error_message, None
 
 
-# In[176]:
+# In[17]:
 
 
 def chat_gemini(history):
-    print(f"\nhistory is {history}\n")
+    #print(f"\nhistory is {history}\n")
     history_gemini = [{'role': m['role'], 'parts': [{'text': m['content']}]} if 'content' in m       #if content exists, change it to parts format
                       else {'role': m['role'], 'parts': m['parts']} if 'parts' in m                      #else if parts exists, just copy it as it is
                       else {'role': m['role']} for m in history]        #else neither content nor parts exists, copy only the role ignoring all other keys like metadata, options etc
     
-    print(f"\nhistroy_gemini is {history_gemini}\n")
+    #print(f"\nhistroy_gemini is {history_gemini}\n")
     model = genai.GenerativeModel(
         model_name=GOOGLE_MODEL,
         system_instruction=system_message
@@ -530,7 +530,7 @@ def chat_gemini(history):
             image = artist(event_text)
             tool_result = handle_tool_call(event_text)
            
-            print(f"\ntool_result is {tool_result}\n")
+            #print(f"\ntool_result is {tool_result}\n")
             stream = model.generate_content(
                 "Based on this information `" + tool_result + "`, extract the details of the event and provide the event details to the user",
                  stream=True               
@@ -561,7 +561,7 @@ def chat_gemini(history):
     
 
 
-# In[168]:
+# In[18]:
 
 
 def call_and_process_model_responses(fn_name, chatbot):#, response, image):
@@ -577,13 +577,13 @@ def call_and_process_model_responses(fn_name, chatbot):#, response, image):
         
 
 
-# In[169]:
+# In[20]:
 
 
 def handle_tool_call(event_text):
-    print(f"event text is {event_text}")
+    #print(f"event text is {event_text}")
     event_found = get_event_details(event_text)
-    print(f"event_found is {event_found}")
+    #print(f"event_found is {event_found}")
     
     if event_found:
         response = json.dumps({"name": event_found['name'],"description": event_found['description'], "when": event_found['date_time'], "where": event_found['location']})
@@ -593,7 +593,7 @@ def handle_tool_call(event_text):
     
 
 
-# In[170]:
+# In[21]:
 
 
 def process_chosen_model(chatbot, model):
@@ -610,7 +610,7 @@ def process_chosen_model(chatbot, model):
         
 
 
-# In[174]:
+# In[22]:
 
 
 # More involved Gradio code as we're not using the preset Chat interface!
@@ -653,16 +653,15 @@ with gr.Blocks(css="""
         lambda chat: talker(chat[-1]["content"]), inputs=[chatbot], outputs=gr.Audio(autoplay=True, visible=False)
     )
     
-    clear.click(lambda: None, inputs=None, outputs=chatbot, queue=False)
+    clear.click(lambda: (None, None), inputs=None, outputs=[image_output, chatbot], queue=False)
 
 
-# In[175]:
+# In[23]:
 
 
 ui.launch(inbrowser=True)
 
 input("Press Enter to exit\n")
-
 
 # In[ ]:
 
